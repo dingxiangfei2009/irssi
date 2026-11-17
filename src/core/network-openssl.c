@@ -112,9 +112,9 @@ static const char *tls_dns_name(const GENERAL_NAME * gn)
 	}
 
 	/* Safe to treat as an ASCII string possibly holding a DNS name */
-	dnsname = (char *) ASN1_STRING_data(gn->d.ia5);
+	dnsname = ASN1_STRING_get0_data(gn->d.ia5);
 
-	if (has_internal_nul(dnsname, ASN1_STRING_length(gn->d.ia5))) {
+	if (has_internal_nul(dnsname, ASN1_STRING_get_length(gn->d.ia5))) {
 		g_warning("Internal NUL in subjectAltName");
 		return NULL;
 	}
